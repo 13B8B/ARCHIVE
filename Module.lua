@@ -113,6 +113,14 @@ function module:StartQuest()
 end
 
 function module:TeleportQuest()
+	local Players = game:GetService("Players")
+	local LocalPlayer = Players.LocalPlayer
+	local function TP(position, time)
+		local humanoidRootPart = LocalPlayer.Character.HumanoidRootPart
+		local info = TweenInfo.new(time, Enum.EasingStyle.Quad)
+		local tween = game:GetService("TweenService"):Create(humanoidRootPart, info, {CFrame = CFrame.new(position)})
+		tween:Play()
+	end
 	if c.Text == "30/960" or c.Text == "1/1" or c.Text == "2/2" or c.Text == "3/3" or c.Text == "4/4" or c.Text == "5/5" or c.Text == "6/6" or c.Text == "7/7" or c.Text == "8/8" then
 		if QuestSelected == "1 [Level 0]" then
 			TP(Vector3.new(3475.2, 144.373, 1881.89), .1)
@@ -172,6 +180,5 @@ function module:TeleportQuest()
 			TP(Vector3.new(5796.09, 143.271, -3685.17), .1)
 		end
 	end
-end
-
+end  
 return module
