@@ -1,7 +1,7 @@
 local player = game:GetService('Players').LocalPlayer
 local mouse = player:GetMouse()
 local library = {
-	Name = 'B93X1',
+	Name = 'nexus',
 	Version = 'v. 1.0.0',
 	Icon = 'rbxassetid://1',
 	Parent = game.CoreGui or player.PlayerGui or player:WaitForChild("PlayerGui", 5),
@@ -551,33 +551,33 @@ do
 	end
 	function library.Functions.SaveConfig_game(name_of_the_game: string, config: table)
 		if library.IsFileSystem then
-			if not isfolder(library.Name .. ' UI') then
-				makefolder(library.Name .. ' UI')
+			if not isfolder(library.Name) then
+				makefolder(library.Name)
 			end
-			if not isfolder(library.Name .. ' UI/Games') then
-				makefolder(library.Name .. ' UI/Games')
+			if not isfolder(library.Name) then
+				makefolder(library.Name)
 			end
-			if not isfile(library.Name .. ' UI/Games/' .. name_of_the_game .. '.lua') then
-				writefile(library.Name .. ' UI/Games/' .. name_of_the_game .. '.lua', library.encode(config))
+			if not isfile(library.Name) then
+				writefile(library.Name, library.encode(config))
 			else
-				local lastConfig = library.decode(readfile(library.Name .. ' UI/Games/' .. name_of_the_game .. '.lua'))
+				local lastConfig = library.decode(readfile(library.Name))
 				config = library.Functions.mergeTable(lastConfig, config)
-				writefile(library.Name .. ' UI/Games/' .. name_of_the_game .. '.lua', library.encode(config))
+				writefile(library.Name)
 			end
 		end
 	end
 	function library.Functions.SaveConfig_game_noReplace(name_of_the_game: string, config: table)
 		if library.IsFileSystem then
-			if not isfolder(library.Name .. ' UI') then
-				makefolder(library.Name .. ' UI')
+			if not isfolder(library.Name) then
+				makefolder(library.Name)
 			end
-			if not isfolder(library.Name .. ' UI/Games') then
-				makefolder(library.Name .. ' UI/Games')
+			if not isfolder(library.Name) then
+				makefolder(library.Name)
 			end
-			if not isfile(library.Name .. ' UI/Games/' .. name_of_the_game .. '.lua') then
-				writefile(library.Name .. ' UI/Games/' .. name_of_the_game .. '.lua', library.encode(config))
+			if not isfile(library.Name) then
+				writefile(library.Name)
 			else
-				local lastConfig = library.decode(readfile(library.Name .. ' UI/Games/' .. name_of_the_game .. '.lua'))
+				local lastConfig = library.decode(readfile(library.Name))
 				local function check(t, saved)
 					for i, v in pairs(t) do
 						if not library.Functions.BetterFindIndex(saved, i) then
@@ -588,27 +588,27 @@ do
 					end
 				end
 				check(config, lastConfig)
-				writefile(library.Name .. ' UI/Games/' .. name_of_the_game .. '.lua', library.encode(lastConfig))
+				writefile(library.Name, library.encode(lastConfig))
 			end
 		end
 	end
 	function library.Functions.LoadConfig_game(name_of_the_game: string)
 		if library.IsFileSystem then
-			if not isfolder(library.Name .. ' UI') then
-				makefolder(library.Name .. ' UI')
+			if not isfolder(library.Name) then
+				makefolder(library.Name)
 			end
-			if not isfolder(library.Name .. ' UI/Games') then
-				makefolder(library.Name .. ' UI/Games')
+			if not isfolder(library.Name) then
+				makefolder(library.Name)
 			end
-			if isfile(library.Name .. ' UI/Games/' .. name_of_the_game .. '.lua') then
-				return library.decode(readfile(library.Name .. ' UI/Games/' .. name_of_the_game .. '.lua'))
+			if isfile(library.Name) then
+				return library.decode(readfile(library.Name))
 			end
 		end
 	end
 	function library.Save()
 		if library.IsFileSystem then
-			if not isfolder(library.Name .. ' UI') then
-				makefolder(library.Name .. ' UI')
+			if not isfolder(library.Name) then
+				makefolder(library.Name)
 			end
 			local settings = {
 				Name = library.Name,
@@ -620,15 +620,15 @@ do
 				Settings = library.Settings,
 			}
 
-			writefile(library.Name .. ' UI/Settings.lua', library.encode(settings))
+			writefile(library.Name, library.encode(settings))
 		end
 	end
 	function library.Load()
 		if library.IsFileSystem then
-			if not isfolder(library.Name .. ' UI') then
-				makefolder(library.Name .. ' UI')
+			if not isfolder(library.Name) then
+				makefolder(library.Name)
 			end
-			if not isfile(library.Name .. ' UI/Settings.lua') then
+			if not isfile(library.Name) then
 				return
 			end
 
@@ -642,7 +642,7 @@ do
 						end
 					end
 				end
-				loadSettings(library.decode(readfile(library.Name .. ' UI/Settings.lua')), library)
+				loadSettings(library.decode(readfile(library.Name)), library)
 			end)
 			if success then
 				return library.Settings
@@ -694,9 +694,9 @@ do
 		end
 		repeat
 			pcall(function()
-				library.Parent:FindFirstChild(library.Name .. ' UI'):Destroy()
+				library.Parent:FindFirstChild(library.Name):Destroy()
 			end)
-		until not library.Parent:FindFirstChild(library.Name .. ' UI')
+		until not library.Parent:FindFirstChild(library.Name)
 		game:GetService("UserInputService").MouseIconEnabled = true
 		library.Enabled = true
 
@@ -725,7 +725,7 @@ do
 			end))
 		end
         local ScreenGui = Create('ScreenGui', {
-            Name = library.Name .. ' UI',
+            Name = library.Name,
             Parent = library.Parent
         })
 		table.insert(library.connections, ScreenGui.Destroying:connect(function()
